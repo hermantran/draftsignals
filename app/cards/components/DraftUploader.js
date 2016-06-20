@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FileUploader } from '../../common';
 
-class CardUploader extends Component {
+class DraftUploader extends Component {
   render() {
     return (
       <FileUploader onChange={this.props.onChange}/>
@@ -9,4 +9,4 @@ class CardUploader extends Component {
   }
 }
 
-export default CardUploader;
+export default DraftUploader;

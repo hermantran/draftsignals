@@ -1,2 +1,1 @@
-export { default as CardLayout } from './CardLayout';
-export { default as CardLayoutContainer } from './CardLayoutContainer';
+export { default as DraftLayoutContainer } from './DraftLayoutContainer';

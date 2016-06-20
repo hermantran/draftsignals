@@ -1,0 +1,54 @@
+$width: 200px;
+$margin: 6px;
+
+.card-wrapper {
+  max-width: $width;
+  margin: $margin $margin + 2px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+@mixin card-sizer {
+  $ratio: 311 / 223;
+
+  width: $width;
+  height: round($width * $ratio);
+  display: inline-block;
+  box-sizing: content-box;
+}
+
+@mixin card-border {
+  border-radius: 14px;
+}
+
+.card-image {
+  @include card-sizer;
+  border: $margin solid transparent;
+
+  &.reserved {
+    @include card-border;
+    border: $margin solid #b5afaf;
+  }
+  
+  &.selected {
+    @include card-border;
+    border: $margin solid #167fbc;
+  }
+
+  &.missing {
+    opacity: 0.35;
+  }
+}
+
+.card-placeholder {
+  @include card-sizer;
+  margin: $margin;
+  background: url('http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=null');
+  background-size: cover;
+  position: absolute;
+  z-index: -1;
+
+  &.missing {
+    visibility: hidden;
+  }
+}

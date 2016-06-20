@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import cards from '../cards';
 
-let CardLayoutContainer = cards.components.CardLayoutContainer;
+let DraftLayoutContainer = cards.components.DraftLayoutContainer;
 
 class App extends Component {
   render() {
     return (
-      <CardLayoutContainer/>
+      <DraftLayoutContainer/>
     );
   }
 }

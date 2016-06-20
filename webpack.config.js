@@ -1,7 +1,15 @@
-// In webpack.config.js
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+
+var NodeEnvPlugin = new webpack.DefinePlugin({
+  'process.env': {
+    NODE_ENV: JSON.stringify('development')
+  }
+});
+
+var HotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin();
 
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
@@ -19,6 +27,8 @@ var CleanWebpackPluginConfig = new CleanWebpackPlugin(['dist'], {
 
 module.exports = {
   entry: [
+    'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
+    'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
     './app/index.js'
   ],
   output: {
@@ -30,14 +40,12 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: '/node_modules/',
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react']
-        }
+        loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=react']
       },
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        test: /\.(scss|css)$/,
+        loaders: ['style', 'css', 'sass']
+        // ExtractTextPlugin.extract('style-loader', 'css-loader')
       },
       {
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
@@ -49,8 +57,10 @@ module.exports = {
     }
   },
   plugins: [
+    NodeEnvPlugin,
+    HotModuleReplacementPluginConfig,
     HTMLWebpackPluginConfig,
-    ExtractTextPluginConfig,
+    // ExtractTextPluginConfig,
     CleanWebpackPluginConfig
   ]
 };
