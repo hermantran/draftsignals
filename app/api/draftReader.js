@@ -1,4 +1,5 @@
 import Q from 'q';
+import { getSet } from './cardApi';
 
 const regex = {
   set: /-{6}\s[A-Z|\d]{3}\s-{6}\s/,
@@ -8,7 +9,7 @@ const regex = {
   card: /\s{4}|-->\s/,
   selected: /-->\s/,
   reserved: /--:\s/,
-  cardReplace: /\s{4}|-->\s|--:\s/
+  cardReplace: /\s{4}|-->\s|--:\s|\r|\n/g
 };
 
 export const packCount = 3;
@@ -21,17 +22,40 @@ export const readDraftFile = (file) => {
       
   reader.readAsText(file);
   reader.onload = () => {
-    let data = parseDraftFile(reader.result);
-    dfd.resolve(data);
+    let data = parseDraftFile(reader.result),
+        { sets, cards } = data;
+
+    getAllSets(sets)
+      .then(lookup => addCardData(cards, lookup))
+      .then(dfd.resolve);
   };
 
   return dfd.promise;
 };
 
+function getAllSets(sets) {
+  return Q.all(sets.map(set => getSet(set))).then((data) => {
+    return sets.reduce((obj, set, i) => {
+      obj[set] = data[i];
+      return obj;
+    }, {});
+  });
+}
+
+function addCardData(cards, lookup) {
+  return cards.map((card) => {
+    let data = lookup[card.set][card.name];
+    return Object.assign(card, data, {
+      set: data ? card.set : null
+    });
+  });
+}
+
 export const parseDraftFile = (text) => {
   let lines = text.split('\n'),
       cards = [],
       reserved = [],
+      sets = [],
       pack = 0,
       key = 0,
       set,
@@ -40,11 +64,12 @@ export const parseDraftFile = (text) => {
       isInPicks;
 
   lines.forEach(checkLine);
-  return cards;
+  return { sets, cards };
 
   function checkLine(line) {
     if (regex.set.test(line)) {
       set = line.replace(regex.setReplace, '');
+      sets.push(set);
       pack++;
     }
     else if (regex.pick.test(line)) {

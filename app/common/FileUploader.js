@@ -12,7 +12,15 @@ class FileUploader extends Component {
 
   render() {
     return (
-      <input type="file" onChange={this.handleChange}/>
+      <div className="file-field input-field">
+        <div className="btn">
+          <span>File</span>
+          <input type="file" onChange={this.handleChange}/>
+        </div>
+        <div className="file-path-wrapper">
+          <input className="file-path validate" type="text"/>
+        </div>
+      </div>
     );
   }
 }

@@ -34,3 +34,31 @@ export function viewNextPicks() {
     type: types.VIEW_NEXT
   };
 }
+
+export function viewPackPick(pack, pick) {
+  return {
+    type: types.VIEW_PACK_PICK,
+    payload: {
+      pack,
+      pick
+    }
+  };
+}
+
+export function toggleSelected() {
+  return {
+    type: types.TOGGLE_SELECTED
+  };
+}
+
+export function toggleReserved() {
+  return {
+    type: types.TOGGLE_RESERVED
+  };
+}
+
+export function toggleMissing() {
+  return {
+    type: types.TOGGLE_MISSING
+  };
+}

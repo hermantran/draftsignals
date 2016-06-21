@@ -9,7 +9,8 @@ class Card extends Component {
     const getImageLink = (card) => {
       let { name, set } = card;
 
-      return GATHERER_URL + '&name=' + name + '&set=' + set;
+      return GATHERER_URL + '&name=' + name +
+        (set ? '&set=' + set : '');
     };
 
     let { card } = this.props;
