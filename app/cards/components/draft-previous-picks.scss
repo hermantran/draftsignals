@@ -1,0 +1,27 @@
+@import '../../app/app.scss';
+
+.previous-picks-wrapper {
+  position: relative;
+  width: 226px;
+  height: 700px;
+  overflow: auto;
+  margin: 0 auto;
+
+  @media #{$medium-and-down} {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.previous-pick {
+  position: absolute;
+  display: inline-block;
+
+  &:hover, &:active {
+    z-index: 10;
+  }
+
+  @media #{$medium-and-down} {
+    position: static;
+  }
+}

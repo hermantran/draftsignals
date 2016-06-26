@@ -1,14 +1,16 @@
 import * as types from './actionTypes';
-import { readDraftFile, pickCount, packCount } from '../api/draftReader';
+import { push } from 'react-router-redux';
+import { readDraftFile, pickCount, packCount } from '../middleware/draftReader';
 
-export function uploadDraft(e) {
-  if (!e.target.files.length) {
+export function uploadDraft(files) {
+  if (!files.length) {
     return viewDraft();
   }
 
   return (dispatch) => {
-    return readDraftFile(e.target.files[0])
-    .then(cards => dispatch(viewDraft(cards)));
+    return readDraftFile(files[0])
+    .then(cards => dispatch(viewDraft(cards)))
+    .then(() => dispatch(push('/draft')));
   };
 }
 

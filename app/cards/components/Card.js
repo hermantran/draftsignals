@@ -7,10 +7,14 @@ class Card extends Component {
     const GATHERER_URL = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card&';
 
     const getImageLink = (card) => {
-      let { name, set } = card;
+      let { name, set } = card,
+          formattedSet = set ? `&set=${set}` : '';
 
-      return GATHERER_URL + '&name=' + name +
-        (set ? '&set=' + set : '');
+      return `${GATHERER_URL}&name=${name}${formattedSet}`;
+    };
+
+    const getCardName = (card) => {
+      return this.props.hideName ? '' : <div className="center-align">{card.name}</div>;
     };
 
     let { card } = this.props;
@@ -30,8 +34,8 @@ class Card extends Component {
     return (
       <div className="card-wrapper">
         <div className={placeholderClass}></div>
-        <img className={cardClass} src={getImageLink(card)}/>
-        <div className="center-align">{card.name}</div>
+        <img className={cardClass} src={getImageLink(card)} alt={card.name}/>
+        {getCardName(card)}
       </div>
     );
   }

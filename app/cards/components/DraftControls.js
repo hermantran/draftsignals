@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Checkbox } from '../../common';
+import './draft-controls.scss';
 
 class DraftControls extends Component {
   constructor() {
@@ -15,6 +16,11 @@ class DraftControls extends Component {
   }
 
   render() {
+    const getTitle = () => {
+      let { pack, pick } = this.props;
+      return pick ? <strong>Pack {pack} Pick {pick}</strong> : null;
+    };
+
     const getSelectOptions = (packCount, pickCount) => {
       return Array(packCount * pickCount).fill().map((_,i) => {
         let pack = Math.ceil((i + 1) / pickCount),
@@ -29,23 +35,27 @@ class DraftControls extends Component {
     };
 
     return (
-      <div>
+      <div className="center">
+        <h5>{getTitle()}</h5>
         <div>
           <button className="btn" onClick={this.props.onPrev}>&lt;&lt;</button>
+          &nbsp;
+          <div className="pack-pick-menu-wrapper">
+            <button className="btn pack-pick-button">Jump To</button>
+            <select className="browser-default pack-pick-menu"
+             onChange={this.handleSelectChange}>
+              {getSelectOptions(this.props.packCount, this.props.pickCount)}
+            </select>
+          </div>
+          &nbsp;
           <button className="btn" onClick={this.props.onNext}>&gt;&gt;</button>
-          <select className="browser-default"
-           onChange={this.handleSelectChange}>
-            {getSelectOptions(this.props.packCount, this.props.pickCount)}
-          </select>
+          
         </div>
         <div>
           Always show:
           <Checkbox id="toggleSelected" label="Pick"
            checked={this.props.selectedShown}
            onClick={this.props.toggleSelected}/>
-          <Checkbox id="toggleReserved" label="Reserved cards"
-           checked={this.props.reservedShown}
-           onClick={this.props.toggleReserved}/>
           <Checkbox id="toggleMissing" label="Missing cards"
            checked={this.props.missingShown}
            onClick={this.props.toggleMissing}/>

@@ -38,7 +38,12 @@ export const getFilteredPicks = createSelector(
 export const getSelected = createSelector(
   [getCards, getPack, getPick],
   (cards, pack, pick) => {
-    return cards.filter(card => card.isSelected &&
+    let filtered = cards.filter(card => card.isSelected &&
       ((card.pack < pack) || card.pack === pack && card.pick < pick));
+
+    return filtered.map(card => Object.assign({}, card, { 
+      isSelected: false,
+      isReserved: false
+    }));
   }
 );
