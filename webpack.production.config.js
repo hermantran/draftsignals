@@ -1,14 +1,22 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-var HotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin();
+// Remove React Dev Tools console message
+var NodeEnvPluginConfig = new webpack.DefinePlugin({
+  'process.env': {
+    NODE_ENV: JSON.stringify('production')
+  }
+});
 
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
-  filename: 'index.html',
+  filename: '../index.html',
   inject: 'body'
 });
+
+var ExtractTextPluginConfig = new ExtractTextPlugin('app.css');
 
 var CleanWebpackPluginConfig = new CleanWebpackPlugin(['dist'], {
   root: __dirname,
@@ -18,24 +26,26 @@ var CleanWebpackPluginConfig = new CleanWebpackPlugin(['dist'], {
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
-    'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
     './app/index.js'
   ],
   output: {
-    path: __dirname + '/dist',
-    filename: 'index_bundle.js'
+    path: __dirname + '/dist/',
+    filename: 'app.js'
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=react']
+        loaders: ['babel?presets[]=es2015,presets[]=react']
       },
       {
-        test: /\.(scss|css)$/,
-        loaders: ['style', 'css', 'sass']
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css')
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
       },
       {
         test: /\.png$/,
@@ -51,8 +61,9 @@ module.exports = {
     }
   },
   plugins: [
-    HotModuleReplacementPluginConfig,
+    NodeEnvPluginConfig,
     HTMLWebpackPluginConfig,
+    ExtractTextPluginConfig,
     CleanWebpackPluginConfig
   ]
 };
