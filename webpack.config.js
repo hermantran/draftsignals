@@ -2,6 +2,12 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
+var NodeEnvPluginConfig = new webpack.DefinePlugin({
+  'process.env': {
+    NODE_ENV: JSON.stringify('development')
+  }
+});
+
 var HotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin();
 
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -51,6 +57,7 @@ module.exports = {
     }
   },
   plugins: [
+    NodeEnvPluginConfig,
     HotModuleReplacementPluginConfig,
     HTMLWebpackPluginConfig,
     CleanWebpackPluginConfig

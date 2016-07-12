@@ -4,6 +4,9 @@ module.exports = {
     "commonjs": true,
     "es6": true
   },
+  "globals": {
+    "process": true
+  },
   "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaFeatures": {
@@ -18,7 +21,7 @@ module.exports = {
   "rules": {
     "indent": [1, 2, { "SwitchCase": 1, "VariableDeclarator": 2 }],
     "quotes": [1, "single"],
-    "semi": [1,"always"],
+    "semi": [1, "always"],
     "react/jsx-uses-vars": 2,
     "react/jsx-uses-react": 2
   }
