@@ -6,7 +6,7 @@ import DraftPreviousPicks from './DraftPreviousPicks';
 class CardLayout extends Component {
   render() {
     let { actions, selected, picks, pack, pick, packCount, pickCount,
-          selectedShown, reservedShown, missingShown } = this.props;
+          selectedShown, missingShown, previousShown } = this.props;
     return (
       <div>
         <div className="row">
@@ -20,16 +20,16 @@ class CardLayout extends Component {
              onNext={actions.viewNextPicks}
              selectPackPick={actions.viewPackPick}
              toggleSelected={actions.toggleSelected}
-             toggleReserved={actions.toggleReserved}
              toggleMissing={actions.toggleMissing}
+             togglePrevious={actions.togglePrevious}
              selectedShown={selectedShown}
-             reservedShown={reservedShown}
              missingShown={missingShown}
+             previousShown={previousShown}
             />
             <DraftViewer cards={picks}/>
           </div>
           <div className="col s12 l2">
-            <DraftPreviousPicks cards={selected}/>
+            <DraftPreviousPicks cards={selected} previousShown={previousShown}/>
           </div>
         </div>
       </div>

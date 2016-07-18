@@ -1,55 +1,121 @@
+@import '../../common/variables.scss';
+
 $width: 180px;
-$margin: 7px;
+$lWidth: $width * 0.85;
+$mWidth: $width * 0.75;
+$margin: 5px;
 
 .card-wrapper {
+  position: relative;
+  margin: 0 3px 10px 0;
   max-width: $width;
-  margin: $margin $margin;
   display: inline-block;
   vertical-align: top;
+  cursor: pointer;
+  font-size: 0.9rem;
+
+  &:hover, &:active {
+    .card-enlarged {
+      display: block;
+    }
+  }
+
+  &.selected {
+    .card-checkmark {
+      display: block;
+    }
+
+    .card-image {
+      opacity: 0.8;
+    }
+
+    .card-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  &.missing {
+    .card-image {
+      opacity: 0.35;
+    }
+
+    .card-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  @media screen and (max-width: $l-breakpoint) {
+    max-width: $lWidth;
+  }
+
+  @media #{$medium-and-down} {
+    max-width: $mWidth;
+  }
+}
+
+@mixin card-dimensions($width) {
+  $ratio: 311 / 223;
+  width: $width;
+  height: round($width * $ratio);
 }
 
 @mixin card-sizer {
-  $ratio: 311 / 223;
-
-  width: $width;
-  height: round($width * $ratio);
+  @include card-dimensions($width);
   display: inline-block;
   box-sizing: content-box;
+  border-radius: 9px;
+
+  @media screen and (max-width: $l-breakpoint) {
+    @include card-dimensions($lWidth);
+  }
+
+  @media #{$medium-and-down} {
+    @include card-dimensions($mWidth);
+  }
 }
 
-@mixin card-border {
-  border-radius: 16px;
+.card-checkmark {
+  display: none;
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  z-index: 2;
+  bottom: 35%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background: url('card-checkmark.png') center center;
+  background-size: cover;
+  opacity: 0.75;
 }
 
 .card-image {
   @include card-sizer;
-  @include card-border;
-  border: $margin solid transparent;
   transition: border 0.5s ease;
-
- /* &.reserved {
-    border: $margin solid #9e9e9e;
-  }*/
-  
-  &.selected {
-    border: $margin solid #4db6ac;
-  }
-
-  &.missing {
-    opacity: 0.35;
-  }
 }
 
 .card-placeholder {
   @include card-sizer;
-  @include card-border;
-  margin: $margin;
   background: url('http://gatherer.wizards.com/Handlers/Image.ashx?type=card&name=null');
   background-size: cover;
   position: absolute;
   z-index: -1;
+}
 
-  &.missing {
-    visibility: hidden;
+.card-enlarged {
+  position: absolute;
+  display: none;
+  top: -15%;
+  left: -15%;
+  z-index: 10;
+  padding: 10px;
+
+  img {
+    border-radius: 13px;
+  }
+
+  @media screen and (max-width: $l-breakpoint) {
+    top: -25%;
+    left: -25%;
   }
 }

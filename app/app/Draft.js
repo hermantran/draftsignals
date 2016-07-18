@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import cards from '../cards';
 
-let DraftLayoutContainer = cards.components.DraftLayoutContainer;
+const { DraftLayoutContainer } = cards.components;
 
 class Draft extends Component {
   render() {

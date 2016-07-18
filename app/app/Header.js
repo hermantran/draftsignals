@@ -7,10 +7,12 @@ class Header extends Component {
     return (
       <nav className="nav">
         <div className="nav-wrapper">
-          <span className="brand-logo black-text">Redrafter</span>
-          <ul className="right">
+          <Link to="/"><span className="brand-logo center black-text">DraftSignals</span></Link>
+          <ul className="left">
             <li><Link className="black-text" to="/">Upload</Link></li>
-            <li><Link className="black-text" to="/draft">Draft</Link></li>
+          </ul>
+          <ul className="right">
+            <li><Link className="black-text" to="/faq">FAQ</Link></li>
           </ul>
         </div>
       </nav>

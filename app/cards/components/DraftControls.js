@@ -51,14 +51,18 @@ class DraftControls extends Component {
           <button className="btn" onClick={this.props.onNext}>&gt;&gt;</button>
           
         </div>
-        <div>
-          Always show:
-          <Checkbox id="toggleSelected" label="Pick"
+        <div className="margin-top">
+          Always Show:
+          <Checkbox className="spaced"
+           id="toggleSelected" label="Pick"
            checked={this.props.selectedShown}
            onClick={this.props.toggleSelected}/>
-          <Checkbox id="toggleMissing" label="Missing cards"
+          <Checkbox id="toggleMissing" label="Missing Cards"
            checked={this.props.missingShown}
            onClick={this.props.toggleMissing}/>
+          <Checkbox id="togglePrevious" label="Previous Picks"
+           checked={this.props.previousShown}
+           onClick={this.props.togglePrevious}/>
         </div>
       </div>
     );

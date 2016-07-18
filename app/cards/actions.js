@@ -1,16 +1,21 @@
 import * as types from './actionTypes';
 import { push } from 'react-router-redux';
-import { readDraftFile, pickCount, packCount } from '../middleware/draftReader';
+import { readDraftAndDeckFile, pickCount, packCount } from '../middleware/draftReader';
 
-export function uploadDraft(files) {
-  if (!files.length) {
-    return viewDraft();
+export function upload(draftFiles, deckFiles) {
+  if (!draftFiles && !deckFiles) {
+    return;
   }
 
+  draftFiles = draftFiles || [];
+  deckFiles = deckFiles || [];
+
   return (dispatch) => {
-    return readDraftFile(files[0])
-    .then(cards => dispatch(viewDraft(cards)))
-    .then(() => dispatch(push('/draft')));
+    dispatch(showLoading());
+    return readDraftAndDeckFile(draftFiles[0], deckFiles[0])
+      .then(({ draft }) => dispatch(viewDraft(draft)))
+      .then(() => dispatch(push('/draft')))
+      .catch(() => dispatch(showError()));
   };
 }
 
@@ -62,5 +67,23 @@ export function toggleReserved() {
 export function toggleMissing() {
   return {
     type: types.TOGGLE_MISSING
+  };
+}
+
+export function togglePrevious() {
+  return {
+    type: types.TOGGLE_PREVIOUS
+  };
+}
+
+export function showLoading() {
+  return {
+    type: types.SHOW_LOADING
+  };
+}
+
+export function showError() {
+  return {
+    type: types.SHOW_ERROR
   };
 }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import cards from '../cards';
 
-
-const DraftUploaderContainer = cards.components.DraftUploaderContainer;
+const { DraftUploaderContainer } = cards.components;
 
 class Home extends Component {
   render() {
@@ -10,12 +9,7 @@ class Home extends Component {
       <div>
         <div className="row">
           <div className="col s12 l6 offset-l3">
-            <div className="card">
-              <div className="card-content">
-                <div className="card-title">Upload</div>
-                <DraftUploaderContainer/>
-              </div>
-            </div>
+            <DraftUploaderContainer/>
           </div>
         </div>
         <div className="row">

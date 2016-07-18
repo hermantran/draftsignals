@@ -5,3 +5,6 @@ export const VIEW_PACK_PICK = 'cards/VIEW_PACK_PICK';
 export const TOGGLE_SELECTED = 'cards/TOGGLE_SELECTED';
 export const TOGGLE_RESERVED = 'cards/TOGGLE_RESERVED';
 export const TOGGLE_MISSING = 'cards/TOGGLE_MISSING';
+export const TOGGLE_PREVIOUS = 'cards/TOGGLE_PREVIOUS';
+export const SHOW_ERROR = 'cards/SHOW_ERROR';
+export const SHOW_LOADING = 'cards/SHOW_LOADING';

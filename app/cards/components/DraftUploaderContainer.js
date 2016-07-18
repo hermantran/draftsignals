@@ -5,9 +5,8 @@ import * as constants from '../constants';
 import DraftUploader from './DraftUploader';
 
 const mapStateToProps = (store) => {
-  let state = store[constants.NAME];
-
-  return state;
+  let { success, loading } = store[constants.NAME];
+  return { success, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

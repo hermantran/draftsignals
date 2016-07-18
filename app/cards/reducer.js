@@ -8,7 +8,10 @@ const initialState = {
   pickCount: 0,
   selectedShown: false,
   reservedShown: false,
-  missingShown: false
+  missingShown: false,
+  previousShown: true,
+  success: true,
+  loading: false
 };
 
 function cardReducer(state = initialState, action) {
@@ -20,7 +23,9 @@ function cardReducer(state = initialState, action) {
         pack: 1,
         pick: 1,
         packCount: payload.packCount,
-        pickCount: payload.pickCount
+        pickCount: payload.pickCount,
+        success: true,
+        loading: false
       });
     case types.VIEW_PREVIOUS:
       return getStateFromPackPick(state, state.pack, state.pick - 1);
@@ -39,6 +44,19 @@ function cardReducer(state = initialState, action) {
     case types.TOGGLE_MISSING:
       return Object.assign({}, state, {
         missingShown: !state.missingShown
+      });
+    case types.TOGGLE_PREVIOUS:
+      return Object.assign({}, state, {
+        previousShown: !state.previousShown
+      });
+    case types.SHOW_ERROR:
+      return Object.assign({}, state, {
+        loading: false,
+        success: false
+      });
+    case types.SHOW_LOADING:
+      return Object.assign({}, state, {
+        loading: true
       });
   }
 

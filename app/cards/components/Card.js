@@ -4,38 +4,49 @@ import './card.scss';
 
 class Card extends Component {
   render() {
-    const GATHERER_URL = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card&';
+    const GATHERER_URL = 'http://gatherer.wizards.com/',
+        IMAGE_URL = `${GATHERER_URL}Handlers/Image.ashx?type=card`,
+        CARD_URL = `${GATHERER_URL}Pages/Card/Details.aspx?`;
 
     const getImageLink = (card) => {
       let { name, set } = card,
           formattedSet = set ? `&set=${set}` : '';
 
-      return `${GATHERER_URL}&name=${name}${formattedSet}`;
+      return `${IMAGE_URL}&name=${name}${formattedSet}`;
     };
 
-    const getCardName = (card) => {
-      return this.props.hideName ? '' : <div className="center-align">{card.name}</div>;
+    const getCardLink = (card) => {
+      let { name } = card;
+      return `${CARD_URL}name=${name}`;
     };
 
-    let { card } = this.props;
+    const getCardName = (card) => (
+      <div className="center-align">{card.name}</div>
+    );
 
-    let cardClass = classNames({
-      'card-image': true,
+    const getCardEnlarged = (card) => (
+      <div className="card-enlarged">
+        <a href={getCardLink(card)} target="_blank">
+          <img src={getImageLink(card)} alt={card.name} />
+        </a>
+      </div>
+    );
+
+    let { card, hideName, hideEnlarged } = this.props;
+
+    let wrapperClass = classNames({
+      'card-wrapper': true,
       selected: card.isSelected,
-      reserved: card.isReserved,
-      missing: card.isMissing
-    });
-
-    let placeholderClass = classNames({
-      'card-placeholder': true,
       missing: card.isMissing
     });
 
     return (
-      <div className="card-wrapper">
-        <div className={placeholderClass}></div>
-        <img className={cardClass} src={getImageLink(card)} alt={card.name}/>
-        {getCardName(card)}
+      <div className={wrapperClass}>
+        <div className="card-checkmark"></div>
+        <div className="card-placeholder"></div>
+        <img className="card-image" src={getImageLink(card)} alt={card.name} />
+        {!hideName ? getCardName(card) : null}
+        {!hideEnlarged ? getCardEnlarged(card) : null}
       </div>
     );
   }

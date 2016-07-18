@@ -5,27 +5,19 @@ class FileUploader extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
 
     this.state = { 
-      filename: '',
-      files: null
+      filename: ''
     };
   }
 
   handleChange(e) {
+    let { files } = e.target;
     this.setState({ 
-      filename: e.target.value.replace('C:\\fakepath\\', ''),
-      files: e.target.files
+      filename: e.target.value.replace('C:\\fakepath\\', '')
     });
-  }
 
-  handleUpload() {
-    if (!this.state.files) {
-      return;
-    }
-
-    this.props.onUpload(this.state.files);
+    this.props.onChange(files);
   }
 
   render() {
@@ -44,9 +36,6 @@ class FileUploader extends Component {
           <div className="file-path-wrapper">
             <input className={fileTextClass} type="text" value={this.state.filename}/>
           </div>
-        </div>
-        <div className="btn" onClick={this.handleUpload}>
-          Upload
         </div>
       </div>
     );

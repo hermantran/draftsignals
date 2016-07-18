@@ -1,3 +1,14 @@
 .nav {
   background: white;
+  height: 40px;
+  line-height: 40px;
+
+  .brand-logo {
+    font-size: 1.5rem;
+  }
+}
+
+.nav-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
 }
