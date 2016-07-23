@@ -1,1 +1,1 @@
-{"Forest":{"cmc":0,"colors":"G","rarity":"B"},"Island":{"cmc":0,"colors":"U","rarity":"B"},"Mountain":{"cmc":0,"colors":"R","rarity":"B"},"Plains":{"cmc":0,"colors":"W","rarity":"B"},"Swamp":{"cmc":0,"colors":"B","rarity":"B"}}
+{"Forest":{"cmc":0,"colors":"G","rarity":"B","type":"L"},"Island":{"cmc":0,"colors":"U","rarity":"B","type":"L"},"Mountain":{"cmc":0,"colors":"R","rarity":"B","type":"L"},"Plains":{"cmc":0,"colors":"W","rarity":"B","type":"L"},"Swamp":{"cmc":0,"colors":"B","rarity":"B","type":"L"}}

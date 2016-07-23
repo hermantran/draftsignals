@@ -110,6 +110,11 @@ $margin: 5px;
   z-index: 10;
   padding: 10px;
 
+  &.with-alt {
+    width: 260%;
+    left: -80%;
+  }
+
   img {
     border-radius: 13px;
   }
@@ -117,5 +122,19 @@ $margin: 5px;
   @media screen and (max-width: $l-breakpoint) {
     top: -25%;
     left: -25%;
+
+    &.with-alt {
+      width: 310%;
+      left: -100%;
+    }
+  }
+
+  @media #{$medium-and-down} {
+    top: -30%;
+    left: -30%;
+
+    &.with-alt {
+      width: 350%;
+    }
   }
 }

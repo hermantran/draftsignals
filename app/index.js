@@ -5,12 +5,12 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Router, Route, IndexRoute, Redirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
-import { App, Home, Draft } from './app';
+import { App, Home, Draft, Deck } from './app';
 import rootReducer from './rootReducer';
-import { logPageView } from './analytics';
+import { actionLogger, logPageView } from './middleware/analytics';
 
 const router = routerMiddleware(browserHistory);
-const store = createStore(rootReducer, applyMiddleware(thunk, router));
+const store = createStore(rootReducer, applyMiddleware(actionLogger, thunk, router));
 const history = syncHistoryWithStore(browserHistory, store);
 const MOUNT_NODE = document.getElementById('root');
 
@@ -20,6 +20,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
         <Route path="draft" component={Draft} />
+        <Route path="deck" component={Deck} />
         <Redirect path="*" to="/" />
       </Route>
     </Router>
