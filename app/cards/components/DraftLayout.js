@@ -3,7 +3,7 @@ import DraftViewer from './DraftViewer';
 import DraftControls from './DraftControls';
 import DraftPreviousPicks from './DraftPreviousPicks';
 
-class CardLayout extends Component {
+class DraftLayout extends Component {
   render() {
     let { actions, selected, picks, pack, pick, packCount, pickCount,
           selectedShown, missingShown, previousShown } = this.props;
@@ -37,4 +37,4 @@ class CardLayout extends Component {
   }
 }
 
-export default CardLayout;
+export default DraftLayout;

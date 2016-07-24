@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Checkbox } from '../../common';
+import { Link } from 'react-router';
 import './draft-controls.scss';
 
 class DraftControls extends Component {
@@ -38,7 +39,7 @@ class DraftControls extends Component {
       <div className="center">
         <h5>{getTitle()}</h5>
         <div>
-          <button className="btn" onClick={this.props.onPrev}>&lt;&lt;</button>
+          <button className="btn" onClick={this.props.onPrev}>&#10094;</button>
           &nbsp;
           <div className="pack-pick-menu-wrapper">
             <button className="btn pack-pick-button">Jump To</button>
@@ -48,21 +49,30 @@ class DraftControls extends Component {
             </select>
           </div>
           &nbsp;
-          <button className="btn" onClick={this.props.onNext}>&gt;&gt;</button>
+          <button className="btn" onClick={this.props.onNext}>&#10095;</button>
           
         </div>
         <div className="margin-top">
           Always Show:
-          <Checkbox className="spaced"
-           id="toggleSelected" label="Pick"
-           checked={this.props.selectedShown}
-           onClick={this.props.toggleSelected}/>
-          <Checkbox id="toggleMissing" label="Missing Cards"
-           checked={this.props.missingShown}
-           onClick={this.props.toggleMissing}/>
-          <Checkbox id="togglePrevious" label="Previous Picks"
-           checked={this.props.previousShown}
-           onClick={this.props.togglePrevious}/>
+          <Checkbox 
+            id="toggleSelected"
+            label="Pick"
+            checked={this.props.selectedShown}
+            onChange={this.props.toggleSelected}
+          />
+          <Checkbox
+            label="Cards Taken"
+            id="toggleMissing" 
+            checked={this.props.missingShown}
+            onChange={this.props.toggleMissing}
+          />
+          <Checkbox
+            id="togglePrevious"
+            label="Previous Picks"
+            checked={this.props.previousShown}
+            onChange={this.props.togglePrevious}
+          />
+          <Link className="black-text" to="/deck">Deck</Link>
         </div>
       </div>
     );

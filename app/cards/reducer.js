@@ -1,7 +1,11 @@
 import * as types from './actionTypes';
+import { SORTS } from './constants';
 
 const initialState = {
-  cards: [],
+  draft: [],
+  deck: [],
+  mainDeckSort: SORTS.cmc,
+  sideboardSort: SORTS.colors,
   pack: null,
   pick: null,
   packCount: 0,
@@ -19,7 +23,8 @@ function cardReducer(state = initialState, action) {
   switch(type) {
     case types.UPLOAD:
       return Object.assign({}, state, {
-        cards: payload.cards,
+        draft: payload.draft,
+        deck: payload.deck,
         pack: 1,
         pick: 1,
         packCount: payload.packCount,
@@ -48,6 +53,14 @@ function cardReducer(state = initialState, action) {
     case types.TOGGLE_PREVIOUS:
       return Object.assign({}, state, {
         previousShown: !state.previousShown
+      });
+    case types.CHANGE_MAIN_DECK_SORT:
+      return Object.assign({}, state, {
+        mainDeckSort: payload.sort
+      });
+    case types.CHANGE_SIDEBOARD_SORT:
+      return Object.assign({}, state, {
+        sideboardSort: payload.sort
       });
     case types.SHOW_ERROR:
       return Object.assign({}, state, {

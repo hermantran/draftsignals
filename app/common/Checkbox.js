@@ -1,17 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './checkbox.scss';
 
-class Checkbox extends Component {
-  render() {
-    return (
-      <span className="checkbox-wrapper spaced" onClick={this.props.onClick}>
-        <input type="checkbox" id={this.props.id} className="filled-in"
-         checked={this.props.checked}
-        />
-        <label>{this.props.label}</label>
-      </span>
-    );
-  }
+function Checkbox({ id, label, checked, onChange }) {
+  return (
+    <span className="checkbox-wrapper spaced">
+      <input
+        type="checkbox"
+        name={id}
+        id={id}
+        className="filled-in"
+        checked={checked}
+        onChange={onChange}
+      />
+      <label htmlFor={id}>{label}</label>
+    </span>
+  );
 }
 
 export default Checkbox;

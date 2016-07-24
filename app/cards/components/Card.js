@@ -23,7 +23,8 @@ function Card({ card, hideName, hideEnlarged }) {
 
   const enlargedClass = classNames({
     'card-enlarged': true,
-    'with-alt': card.altName
+    'with-alt': card.altName,
+    'without-name': hideName
   });
 
   const getCardEnlarged = (card) => (

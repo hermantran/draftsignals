@@ -1,0 +1,10 @@
+@import './variables.scss';
+
+.radio-button-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+
+  input[type="radio"] + label {
+    padding-left: 25px;
+  }
+}

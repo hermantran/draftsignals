@@ -1,0 +1,39 @@
+@import '../../common/variables.scss';
+
+.deck-wrapper {
+  height: 650px;
+  padding: 20px 30px;
+  white-space: nowrap;
+  overflow: scroll;
+  border: 1px solid #ddd;
+
+  @media screen and (max-width: $l-breakpoint) {
+    height: 500px;
+  }
+}
+
+.deck-column {
+  position: relative;
+  display: inline-block;
+  width: 190px;
+  white-space: initial;
+  vertical-align: top;
+  text-align: center;
+
+  @media screen and (max-width: $l-breakpoint) {
+    width: 165px;
+  }
+
+  @media #{$medium-and-down} {
+    width: 145px;
+  }
+}
+
+.deck-card {
+  position: absolute;
+  left: 0;
+
+  &:hover, &:active {
+    z-index: 10;
+  }
+}

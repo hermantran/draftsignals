@@ -1,6 +1,6 @@
 import Q from 'q';
 import { readTextFile } from './fileReader';
-import { getSet } from './cardApi';
+import { getSet, getAllCards } from './cardApi';
 
 const regex = {
   draft: /Event\s#:\s\d*/,
@@ -25,7 +25,6 @@ export const readDraftAndDeckFile = (draftFile, deckFile) => {
 
   return readDraftFile(draftFile)
     .then(storeDraft)
-    .then(() => console.log(data))
     .then(() => data);
 
   function storeDraft({ sets, cards }) {
@@ -76,13 +75,28 @@ function validateFile(data, firstLineRegex) {
 }
 
 function checkDeckSetData({ sets, cards }) {
+  let updated = [],
+      check = cards;
+
   return getAllSets(sets).then(lookup => {
     sets.forEach(set => {
-      cards.forEach(card => card.set = set);
-      addCardData(cards.filter(card => !card.isFound), lookup);
+      check = check.map(card => { card.set = set; return card; });
+      let added = addCardData(check, lookup);
+      updated.push(...added.filter(card => card.set));
+      check = added.filter(card => !card.set);
     });
 
-    return cards;
+    if (check.length) {
+      return checkAllCardData(check).then(data => updated.concat(data));
+    }
+
+    return updated;
+  });
+}
+
+function checkAllCardData(cards) {
+  return getAllCards().then(lookup => {
+    return cards.map(card => Object.assign(card, lookup[card.name]));
   });
 }
 
@@ -105,7 +119,6 @@ function addCardData(cards, lookup) {
   return cards.map((card) => {
     let data = lookup[card.set][card.name];
     return Object.assign(card, data, {
-      isFound: !!data,
       set: data ? card.set : null
     });
   });

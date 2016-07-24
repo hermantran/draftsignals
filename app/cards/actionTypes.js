@@ -6,5 +6,7 @@ export const TOGGLE_SELECTED = 'cards/TOGGLE_SELECTED';
 export const TOGGLE_RESERVED = 'cards/TOGGLE_RESERVED';
 export const TOGGLE_MISSING = 'cards/TOGGLE_MISSING';
 export const TOGGLE_PREVIOUS = 'cards/TOGGLE_PREVIOUS';
+export const CHANGE_MAIN_DECK_SORT = 'cards/CHANGE_MAIN_DECK_SORT';
+export const CHANGE_SIDEBOARD_SORT = 'cards/CHANGE_SIDEBOARD_SORT';
 export const SHOW_ERROR = 'cards/SHOW_ERROR';
 export const SHOW_LOADING = 'cards/SHOW_LOADING';
