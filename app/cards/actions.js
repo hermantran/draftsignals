@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import { push } from 'react-router-redux';
-import { readDraftAndDeckFile, pickCount, packCount } from '../middleware/mtgoReader';
+import { readDraftAndDeckFile, parseDraftAndDeckData, pickCount, packCount } from '../middleware/mtgoReader';
+import { uploadData, getData } from '../middleware/firebase';
 
 export function upload(draftFiles, deckFiles) {
   if (!draftFiles && !deckFiles) {
@@ -13,14 +14,23 @@ export function upload(draftFiles, deckFiles) {
   return (dispatch) => {
     dispatch(showLoading());
     return readDraftAndDeckFile(draftFiles[0], deckFiles[0])
+      .then(uploadData)
+      .then(id => dispatch(push(`/draft/${id}`)))
+      .catch(() => dispatch(showError()));
+  };
+}
+
+export function get(id) {
+  return (dispatch) => {
+    dispatch(showLoading());
+    return getData(id)
+      .then(parseDraftAndDeckData)
       .then(({ draft, deck }) => dispatch(viewDraft(draft, deck)))
-      .then(() => dispatch(push('/draft')))
       .catch(() => dispatch(showError()));
   };
 }
 
 export function viewDraft(draft = [], deck = []) {
-  console.log(draft, deck);
   return {
     type: types.UPLOAD,
     payload: {

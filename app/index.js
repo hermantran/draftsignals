@@ -19,8 +19,8 @@ ReactDOM.render(
     <Router history={history} onUpdate={logPageView}>
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
-        <Route path="draft" component={Draft} />
-        <Route path="deck" component={Deck} />
+        <Route path="draft/:id" component={Draft} />
+        <Route path="deck/:id" component={Deck} />
         <Redirect path="*" to="/" />
       </Route>
     </Router>

@@ -1,14 +1,8 @@
-@import './variables.scss';
-
 .checkbox-wrapper {
   display: inline-block;
   vertical-align: middle;
 
   label {
     padding-left: 25px;
-  }
-
-  @media #{$small-and-down} {
-    display: block;
   }
 }

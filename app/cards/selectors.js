@@ -6,7 +6,6 @@ const getDraft = (state) => state.draft;
 const getPack = (state) => state.pack;
 const getPick = (state) => state.pick;
 const getSelectedShown = (state) => state.selectedShown;
-const getReservedShown = (state) => state.reservedShown;
 const getMissingShown = (state) => state.missingShown;
 
 export const getMainDeckSort = (state) => state.mainDeckSort;
@@ -20,11 +19,10 @@ export const getPicks = createSelector(
 );
 
 export const getMaskedPicks = createSelector(
-  [getPicks, getSelectedShown, getReservedShown],
-  (picks, selectedShown, reservedShown) => {
+  [getPicks, getSelectedShown],
+  (picks, selectedShown) => {
     return picks.map(card => Object.assign({}, card, { 
-      isSelected: selectedShown ? card.isSelected : false,
-      isReserved: reservedShown ? card.isReserved : false
+      isSelected: selectedShown ? card.isSelected : false
     }));
   }
 );
@@ -36,7 +34,7 @@ export const getFilteredPicks = createSelector(
       return picks;
     }
 
-    return picks.filter(card => card.isMissing === missingShown);
+    return picks.filter(card => !!card.isMissing == missingShown);
   }
 );
 
@@ -47,8 +45,7 @@ export const getSelected = createSelector(
       ((card.pack < pack) || card.pack === pack && card.pick < pick));
 
     return filtered.map(card => Object.assign({}, card, { 
-      isSelected: false,
-      isReserved: false
+      isSelected: false
     }));
   }
 );

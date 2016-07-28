@@ -4,6 +4,11 @@ import DraftControls from './DraftControls';
 import DraftPreviousPicks from './DraftPreviousPicks';
 
 class DraftLayout extends Component {
+  componentWillMount() {
+    let { actions, id } = this.props;
+    actions.get(id);
+  }
+
   render() {
     let { actions, selected, picks, pack, pick, packCount, pickCount,
           selectedShown, missingShown, previousShown } = this.props;

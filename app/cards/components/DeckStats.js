@@ -3,7 +3,7 @@ import { TYPES } from '../constants';
 
 function DeckStats({ stats }) {
   const getStat = (type) => (
-    <span key={type}>{TYPES[type]}: {stats[type]}&nbsp;&nbsp;</span>
+    <span key={type}>{TYPES[type]}: {stats[type]}&nbsp;&nbsp;&nbsp;</span>
   );
 
   return (

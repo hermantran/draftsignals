@@ -5,15 +5,16 @@ import * as constants from '../constants';
 import * as selectors from '../selectors';
 import DeckLayout from './DeckLayout';
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (store, props) => {
   let state = store[constants.NAME],
+      { id } = props.params,
       mainDeckStats = selectors.getMainDeckStats(state),
       mainDeck = selectors.getMainDeckSorted(state),
       mainDeckSort = selectors.getMainDeckSort(state),
       sideboard = selectors.getSideboardSorted(state),
       sideboardSort = selectors.getSideboardSort(state);
 
-  return { mainDeckStats, mainDeck, mainDeckSort, sideboard, sideboardSort };
+  return { id, mainDeckStats, mainDeck, mainDeckSort, sideboard, sideboardSort };
 };
 
 const mapDispatchToProps = (dispatch) => {

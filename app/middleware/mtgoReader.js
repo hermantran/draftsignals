@@ -2,6 +2,8 @@ import Q from 'q';
 import { readTextFile } from './fileReader';
 import { getSet, getAllCards } from './cardApi';
 
+const maxFileLength = 18000;
+
 const regex = {
   draft: /Event\s#:\s\d*/,
   deck: /^[0-9]{1,2}\s/,
@@ -13,7 +15,8 @@ const regex = {
   card: /\s{4}|-->\s/,
   selected: /-->\s/,
   reserved: /--:\s/,
-  cardReplace: /\s{4}|-->\s|--:\s|\r|\n/g
+  cardReplace: /\s{4}|-->\s|--:\s|\r|\n/g,
+  invalid: /[A-z\s]>|[<\[\]={}\(\)]/
 };
 
 export const packCount = 3;
@@ -27,33 +30,62 @@ export const readDraftAndDeckFile = (draftFile, deckFile) => {
     .then(storeDraft)
     .then(() => data);
 
-  function storeDraft({ sets, cards }) {
-    data.draft = cards;
+  function storeDraft(draft) {
+    data.draft = draft;
 
     // Deck file is optional
     if (deckFile) {
-      return readDeckFile(deckFile, sets)
+      return readDeckFile(deckFile)
         .then(storeDeck);
     }
   }
 
-  function storeDeck(cards) {
-    data.deck = cards;
+  function storeDeck(deck) {
+    data.deck = deck;
   }
 };
 
-export const readDeckFile = (file, sets) => {
+export const parseDraftAndDeckData = ({ draft, deck }) => {
+  let data = {};
+
+  return readDraftData(draft)
+    .then(storeDraft)
+    .then(() => data);
+
+  function storeDraft({ cards, sets }) {
+    data.draft = cards;
+
+    if (deck) {
+      return readDeckData(deck, sets)
+        .then(storeDeck);
+    }
+  }
+
+  function storeDeck(deck) {
+    data.deck = deck;
+  }
+};
+
+export const readDeckFile = (file) => {
   return readTextFile(file)
     .then(validateDeckFile)
-    .then(parseDeckFile)
-    .then(cards => checkDeckSetData({ sets, cards}));
+    .then(formatData);
 };
 
 export const readDraftFile = (file) => {
   return readTextFile(file) 
     .then(validateDraftFile)
-    .then(parseDraftFile)
-    .then(checkCardSetData);
+    .then(formatData);
+};
+
+export const readDeckData = (data, sets) => {
+  let cards = parseDeckData(data);
+  return checkDeckSetData({ sets, cards });
+};
+
+export const readDraftData = (data) => {
+  let cards = parseDraftData(data);
+  return checkCardSetData(cards);
 };
 
 function validateDeckFile(data) {
@@ -64,10 +96,17 @@ function validateDraftFile(data) {
   return validateFile(data, regex.draft);
 }
 
-function validateFile(data, firstLineRegex) {
-  let firstLine = data.split('\n')[0];
+function formatData(data) {
+  return data.replace(/\r/g, '');
+}
 
-  if (firstLineRegex.test(firstLine)) {
+function validateFile(data, firstLineRegex) {
+  let firstLine = data.split('\n')[0],
+      hasValidFirstLine = firstLineRegex.test(firstLine),
+      hasInvalidChars = regex.invalid.test(data),
+      isSmallFile = (data.length < maxFileLength);
+
+  if (hasValidFirstLine && !hasInvalidChars && isSmallFile) {
     return data;
   }
     
@@ -118,14 +157,15 @@ function getAllSets(sets) {
 function addCardData(cards, lookup) {
   return cards.map((card) => {
     let data = lookup[card.set][card.name];
-    return Object.assign(card, data, {
-      set: data ? card.set : null
-    });
+    if (!data) {
+      delete card.set;
+    }
+    return Object.assign(card, data);
   });
 }
 
-function parseDeckFile(text) {
-  let lines = text.split('\n'),
+function parseDeckData(data) {
+  let lines = data.split('\n'),
       cards = [],
       isSideboard = false,
       id = 0;
@@ -150,8 +190,8 @@ function parseDeckFile(text) {
   }
 }
 
-function parseDraftFile(text) {
-  let lines = text.split('\n'),
+function parseDraftData(data) {
+  let lines = data.split('\n'),
       cards = [],
       reserved = [],
       sets = [],
@@ -181,12 +221,11 @@ function parseDraftFile(text) {
     }
     else if (pick && regex.card.test(line)) {
       let name = line.replace(regex.cardReplace, ''),
-          isSelected = regex.selected.test(line),
-          // isReserved = reserved.indexOf(name) > -1,
-          isMissing = false;
+          isSelected = regex.selected.test(line);
+          // isReserved = reserved.indexOf(name) > -1;
 
       checkMissingCards(name);
-      addCard({ name, set, pack, pick, isSelected, isMissing });
+      addCard({ name, set, pack, pick, isSelected });
     }
     else if (isInPicks && line.length <= 1) {
       isInPicks = false;
@@ -218,7 +257,6 @@ function parseDraftFile(text) {
       addCard(Object.assign({}, card, { 
         pick,
         isSelected: false,
-        isReserved: false,
         isMissing: true 
       }));
     });

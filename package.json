@@ -8,8 +8,8 @@
     "url": "git@github.com:hermantran/draftsignals.git"
   },
   "engines": {
-    "node": "4.4.x",
-    "npm": "3.10.x"
+    "node": ">=4.x.x",
+    "npm": ">=3.x.x"
   },
   "scripts": {
     "start": "node server.js",
@@ -26,6 +26,7 @@
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "firebase": "^3.2.1",
     "html-webpack-plugin": "^2.20.0",
     "materialize-css": "^0.97.6",
     "node-sass": "^3.7.0",
