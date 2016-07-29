@@ -1,4 +1,5 @@
 export const UPLOAD = 'cards/UPLOAD';
+export const ADD_LATEST_DRAFTS = 'cards/ADD_LATEST_DRAFTS';
 export const VIEW_PREVIOUS = 'cards/VIEW_PREVIOUS';
 export const VIEW_NEXT = 'cards/VIEW_NEXT';
 export const VIEW_PACK_PICK = 'cards/VIEW_PACK_PICK';

@@ -4,6 +4,7 @@ import { SORTS } from './constants';
 const initialState = {
   draft: [],
   deck: [],
+  latest: [],
   mainDeckSort: SORTS.cmc,
   sideboardSort: SORTS.colors,
   pack: null,
@@ -31,6 +32,10 @@ function cardReducer(state = initialState, action) {
         pickCount: payload.pickCount,
         success: true,
         loading: false
+      });
+    case types.ADD_LATEST_DRAFTS:
+      return Object.assign({}, state, {
+        latest: payload.latest
       });
     case types.VIEW_PREVIOUS:
       return getStateFromPackPick(state, state.pack, state.pick - 1);

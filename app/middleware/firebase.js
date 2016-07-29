@@ -1,6 +1,5 @@
 import Q from 'q';
 import firebase from 'firebase/app';
-import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
@@ -9,32 +8,42 @@ const config = {
   databaseURL: 'https://draftsignals.firebaseio.com'
 };
 
-const ref = 'drafts/';
+const dataRef = 'drafts/';
+const latestRef = 'latest/';
 
 firebase.initializeApp(config);
 
 let cache = {};
 
 export function uploadData(data) {
-  let req = firebase.database().ref(ref).push(data),
-      key = req.key;
-  cache[key] = data;
-  return req.then(() => key);
+  let req = firebase.database().ref(dataRef).push(data),
+      id = req.key;
+
+  firebase.database().ref(latestRef).push({ id });
+  cache[id] = Q.when(data);
+  return req.then(() => id);
 }
 
 export function getData(id) {
-  if (cache[id]) {
-    return Q.when(cache[id]);
+  if (!cache[id]) {
+    cache[id] = firebase.database().ref(`${dataRef}${id}`).once('value')
+      .then(snapshot => {
+        return Object.assign({}, snapshot.val(), { id });
+      });
   }
 
-  let dfd = Q.defer();
-  firebase.database().ref(`${ref}${id}`).once('value').then(snapshot => {
-    let data = snapshot.val();
-    if (!data) {
-      return dfd.reject('Data not found');
-    }
-    cache[id] = data;
-    dfd.resolve(cache[id]);
-  });
-  return dfd.promise;
+  return cache[id];
+}
+
+export function getLatest() {
+  if (!cache.latest) {
+    cache.latest = firebase.database().ref(latestRef).limitToLast(5).once('value')
+      .then(snapshot => {
+        let data = snapshot.val(),
+            ids = Object.keys(data).reverse().map(key => data[key].id);
+        return Q.all(ids.map(getData));
+      });
+  }
+
+  return cache.latest;
 }

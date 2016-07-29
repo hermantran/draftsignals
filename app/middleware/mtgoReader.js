@@ -19,6 +19,8 @@ const regex = {
   invalid: /[A-z\s]>|[<\[\]={}\(\)]/
 };
 
+let id = 0;
+
 export const packCount = 3;
 export const pickCount = 15;
 export const playerCount = 8;
@@ -32,6 +34,7 @@ export const readDraftAndDeckFile = (draftFile, deckFile) => {
 
   function storeDraft(draft) {
     data.draft = draft;
+    data.title = getTitle(draft);
 
     // Deck file is optional
     if (deckFile) {
@@ -87,6 +90,15 @@ export const readDraftData = (data) => {
   let cards = parseDraftData(data);
   return checkCardSetData(cards);
 };
+
+function getTitle(data) {
+  let arr = data.split('\n');
+  const event = arr.filter(line => regex.draft.test(line))[0];
+  const set = arr.filter(line => regex.set.test(line))
+    .join('~').replace(regex.setReplace, '').replace(/~/g, '-');
+
+  return `${event} ${set}`;
+}
 
 function validateDeckFile(data) {
   return validateFile(data, regex.deck);
@@ -167,9 +179,8 @@ function addCardData(cards, lookup) {
 function parseDeckData(data) {
   let lines = data.split('\n'),
       cards = [],
-      isSideboard = false,
-      id = 0;
-
+      isSideboard = false;
+      
   lines.forEach(checkLine);
   return cards;
 
@@ -196,7 +207,6 @@ function parseDraftData(data) {
       reserved = [],
       sets = [],
       pack = 0,
-      id = 0,
       set,
       pick,
       initial,

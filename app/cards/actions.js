@@ -1,7 +1,7 @@
 import * as types from './actionTypes';
 import { push } from 'react-router-redux';
 import { readDraftAndDeckFile, parseDraftAndDeckData, pickCount, packCount } from '../middleware/mtgoReader';
-import { uploadData, getData } from '../middleware/firebase';
+import { uploadData, getData, getLatest } from '../middleware/firebase';
 
 export function upload(draftFiles, deckFiles) {
   if (!draftFiles && !deckFiles) {
@@ -27,6 +27,22 @@ export function get(id) {
       .then(parseDraftAndDeckData)
       .then(({ draft, deck }) => dispatch(viewDraft(draft, deck)))
       .catch(() => dispatch(showError()));
+  };
+}
+
+export function getLatestDrafts() {
+  return (dispatch) => {
+    return getLatest()
+      .then(data => dispatch(addLatestDrafts(data)));
+  };
+}
+
+export function addLatestDrafts(latest) {
+  return {
+    type: types.ADD_LATEST_DRAFTS,
+    payload: {
+      latest
+    }
   };
 }
 
