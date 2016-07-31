@@ -2,6 +2,12 @@ const fs = require('fs');
 const RAW_DATA_DIR = './data/raw/';
 const FORMATTED_DATA_DIR = './data/';
 
+const TYPES = {
+  OTHER: 'O',
+  CREATURE: 'C',
+  LAND: 'L'
+};
+
 fs.readdir(RAW_DATA_DIR, function(err, data) {
   if (err) {
     return console.log(err);
@@ -44,33 +50,30 @@ function getOutput(data) {
 function getFormatted(card) {
   var colors = card.colorIdentity || ['C'],
       rarity = card.rarity ? card.rarity.substring(0, 1) : undefined,
+      type = getType(card.types),
       altName = card.names ? card.names[1] : undefined;
 
   return {
     cmc: card.cmc || 0,
-    colors: colors.join(''),
+    colors: (type === TYPES.LAND) ? 'C' : colors.join(''),
     rarity: rarity,
-    type: getType(card.types),
+    type: type,
     altName: altName 
   };
 }
 
 function getType(types) {
-  const OTHER = 'O',
-      CREATURE = 'C',
-      LAND = 'L';
-
   if (!types) {
-    return OTHER;
+    return TYPES.OTHER;
   }
 
   if (types.indexOf('Creature') > -1) {
-    return CREATURE;
+    return TYPES.CREATURE;
   }
   else if (types.indexOf('Land') > -1) {
-    return LAND;
+    return TYPES.LAND;
   } else {
-    return OTHER;
+    return TYPES.OTHER;
   }
 }
 
