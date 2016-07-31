@@ -6,9 +6,8 @@
     <meta name="description" content="MTGO draft viewer tool that includes the ability to upload decks and add comments to your drafts."/>
     <meta name="keywords" content="Magic, Magic Online, MTGO, limited, draft, cards"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script>!function(){var e=sessionStorage.redirect;delete sessionStorage.redirect,e&&e!=location.href&&history.replaceState(null,null,e)}();</script>
-  <link href="dist/app.css" rel="stylesheet"></head>
+    <script>sessionStorage.redirect = location.href;</script>
+    <meta http-equiv="refresh" content="0;URL='http://draftsignals.com'"></meta>
   <body>
-    <div id="root"></div>
-  <script type="text/javascript" src="dist/app.js"></script></body>
+  </body>
 </html>
