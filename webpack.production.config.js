@@ -16,7 +16,7 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 });
 
-var ExtractTextPluginConfig = new ExtractTextPlugin('app.css');
+var ExtractTextPluginConfig = new ExtractTextPlugin('app.[hash].css');
 
 var CleanWebpackPluginConfig = new CleanWebpackPlugin(['dist'], {
   root: __dirname,
@@ -26,11 +26,12 @@ var CleanWebpackPluginConfig = new CleanWebpackPlugin(['dist'], {
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     './app/index.js'
   ],
   output: {
     path: __dirname + '/dist/',
-    filename: 'app.js'
+    filename: 'app.[hash].js'
   },
   module: {
     loaders: [

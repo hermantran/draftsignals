@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Checkbox } from '../../common';
-import { Link } from 'react-router';
 import './draft-controls.scss';
 
 class DraftControls extends Component {
@@ -17,6 +16,10 @@ class DraftControls extends Component {
   }
 
   render() {
+    const { onPrev, packCount, pickCount, showSelectedOnce, onNext,
+      selectedShown, toggleSelected, missingShown, toggleMissing,
+      previousShown, togglePrevious } = this.props;
+
     const getTitle = () => {
       let { pack, pick } = this.props;
       return pick ? <strong>Pack {pack} Pick {pick}</strong> : null;
@@ -39,40 +42,41 @@ class DraftControls extends Component {
       <div className="center">
         <h5>{getTitle()}</h5>
         <div>
-          <button className="btn" onClick={this.props.onPrev}>&#10094;</button>
+          <button className="btn" onClick={onPrev}>&#10094;</button>
           &nbsp;
           <div className="pack-pick-menu-wrapper">
             <button className="btn pack-pick-button">Jump To</button>
             <select className="browser-default pack-pick-menu"
              onChange={this.handleSelectChange}>
-              {getSelectOptions(this.props.packCount, this.props.pickCount)}
+              {getSelectOptions(packCount, pickCount)}
             </select>
           </div>
           &nbsp;
-          <button className="btn" onClick={this.props.onNext}>&#10095;</button>
+          <button className="btn" onClick={showSelectedOnce}>Show Pick</button>
+          &nbsp;&nbsp;
+          <button className="btn" onClick={onNext}>&#10095;</button>
           
         </div>
-        <div className="margin-top">
+        <div className="margin">
           Always Show:
           <Checkbox 
             id="toggleSelected"
             label="Pick"
-            checked={this.props.selectedShown}
-            onChange={this.props.toggleSelected}
+            checked={selectedShown}
+            onChange={toggleSelected}
           />
           <Checkbox
             label="Cards Taken"
             id="toggleMissing" 
-            checked={this.props.missingShown}
-            onChange={this.props.toggleMissing}
+            checked={missingShown}
+            onChange={toggleMissing}
           />
           <Checkbox
             id="togglePrevious"
             label="Previous Picks"
-            checked={this.props.previousShown}
-            onChange={this.props.togglePrevious}
+            checked={previousShown}
+            onChange={togglePrevious}
           />
-          <Link className="black-text" to="/deck">Deck</Link>
         </div>
       </div>
     );

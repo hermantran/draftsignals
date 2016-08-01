@@ -25,7 +25,7 @@ export function get(id) {
     dispatch(showLoading());
     return getData(id)
       .then(parseDraftAndDeckData)
-      .then(({ draft, deck }) => dispatch(viewDraft(draft, deck)))
+      .then(({ draft, deck, title }) => dispatch(viewDraft(draft, deck, title)))
       .catch(() => dispatch(showError()));
   };
 }
@@ -46,12 +46,13 @@ export function addLatestDrafts(latest) {
   };
 }
 
-export function viewDraft(draft = [], deck = []) {
+export function viewDraft(draft = [], deck = [], title = null) {
   return {
     type: types.UPLOAD,
     payload: {
       draft,
       deck,
+      title,
       pickCount,
       packCount
     }
@@ -80,6 +81,12 @@ export function viewPackPick(pack, pick) {
   };
 }
 
+export function showSelectedOnce() {
+  return {
+    type: types.SHOW_SELECTED_ONCE
+  };
+}
+
 export function toggleSelected() {
   return {
     type: types.TOGGLE_SELECTED
@@ -101,6 +108,12 @@ export function toggleMissing() {
 export function togglePrevious() {
   return {
     type: types.TOGGLE_PREVIOUS
+  };
+}
+
+export function toggleComments() {
+  return {
+    type: types.TOGGLE_COMMENTS
   };
 }
 
@@ -132,4 +145,10 @@ export function showError() {
   return {
     type: types.SHOW_ERROR
   };
+}
+
+export function resetError() {
+  return {
+    type: types.RESET_ERROR
+  }
 }

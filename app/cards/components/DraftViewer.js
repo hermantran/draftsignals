@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
+import './draft-viewer.scss';
 
 class DraftViewer extends Component {
   render() {
@@ -8,7 +9,7 @@ class DraftViewer extends Component {
     };
 
     return (
-      <div className="margin-top">
+      <div className="draft-wrapper">
         {this.props.cards.map(createCard)}
       </div>
     );

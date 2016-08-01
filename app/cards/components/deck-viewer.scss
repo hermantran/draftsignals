@@ -3,9 +3,10 @@
 .deck-wrapper {
   height: 650px;
   padding: 20px 30px;
+  border: 1px solid #ddd;
   white-space: nowrap;
   overflow: scroll;
-  border: 1px solid #ddd;
+  text-align: left;
 
   @media screen and (max-width: $l-breakpoint) {
     height: 500px;

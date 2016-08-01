@@ -1,8 +1,8 @@
 {
   "name": "draftsignals",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
-  "description": "draft",
+  "description": "MTGO draft viewer",
   "repository": {
     "type": "git",
     "url": "git@github.com:hermantran/draftsignals.git"
@@ -19,6 +19,7 @@
     "axios": "^0.12.0",
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "classnames": "^2.2.5",
@@ -32,6 +33,7 @@
     "node-sass": "^3.7.0",
     "q": "^1.4.1",
     "react": "^15.1.0",
+    "react-disqus-thread": "^0.4.0",
     "react-dom": "^15.1.0",
     "react-ga": "^2.1.1",
     "react-redux": "^4.4.5",

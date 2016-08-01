@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Router, Route, IndexRoute, Redirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
-import { App, Home, Draft, Deck } from './app';
+import { App, Home, Draft, Deck, FAQs } from './app';
 import rootReducer from './rootReducer';
 import { actionLogger, logPageView } from './middleware/analytics';
 
@@ -21,6 +21,7 @@ ReactDOM.render(
         <IndexRoute component={Home} />
         <Route path="draft/:id" component={Draft} />
         <Route path="deck/:id" component={Deck} />
+        <Route path="faqs" component={FAQs} />
         <Redirect path="*" to="/" />
       </Route>
     </Router>

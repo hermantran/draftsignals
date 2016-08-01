@@ -15,6 +15,10 @@ class DraftUploader extends Component {
     };
   }
 
+  componentWillMount() {
+    this.props.actions.resetError();
+  }
+
   handleDraftSelect(files) {
     this.setState({
       draftFiles: files
@@ -49,7 +53,7 @@ class DraftUploader extends Component {
         </div>
         <div className="card-action">
           <button className={buttonClass} onClick={this.handleUpload}>Upload</button>
-          { this.props.loading ? <Loader/> : null }
+          { this.props.loading ? <Loader isTiny="true" /> : null }
           { this.props.success ? null : <div className="red-text">An error occurred. Please ensure that you have selected a valid MTGO draft log file.</div> }
         </div>
       </div>

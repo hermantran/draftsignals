@@ -29,10 +29,8 @@ function Card({ card, hideName, hideEnlarged }) {
 
   const getCardEnlarged = (card) => (
     <div className={enlargedClass}>
-      <a href={getCardLink(card)} target="_blank">
-        <img src={getImageLink(card.name, card.set)} alt={card.name} />
-        {card.altName ? getAltImageLink(card) : null}
-      </a>
+      <img src={getImageLink(card.name, card.set)} alt={card.name} />
+      {card.altName ? getAltImageLink(card) : null}
     </div>
   );
 

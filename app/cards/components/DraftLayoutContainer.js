@@ -7,14 +7,14 @@ import DraftLayout from './DraftLayout';
 
 const mapStateToProps = (store, props) => {
   let state = store[constants.NAME],
-      { pack, pick, pickCount, packCount,
-        selectedShown, missingShown, previousShown } = state,
+      { success, loading, title, pack, pick, pickCount, packCount, toggleComments,
+        selectedShown, missingShown, previousShown, commentsShown, deck } = state,
       { id } = props.params,
       picks = getFilteredPicks(state),
       selected = getSelected(state);
 
-  return { id, pack, pick, pickCount, packCount,
-   selectedShown, missingShown, previousShown, picks, selected };
+  return { success, loading, title, id, pack, pick, pickCount, packCount, toggleComments,
+   selectedShown, missingShown, previousShown, commentsShown, deck, picks, selected };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -48,7 +48,7 @@ export const readDraftAndDeckFile = (draftFile, deckFile) => {
   }
 };
 
-export const parseDraftAndDeckData = ({ draft, deck }) => {
+export const parseDraftAndDeckData = ({ draft, deck, title }) => {
   let data = {};
 
   return readDraftData(draft)
@@ -57,6 +57,7 @@ export const parseDraftAndDeckData = ({ draft, deck }) => {
 
   function storeDraft({ cards, sets }) {
     data.draft = cards;
+    data.title = title;
 
     if (deck) {
       return readDeckData(deck, sets)

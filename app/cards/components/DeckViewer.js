@@ -25,8 +25,8 @@ function DeckViewer({ mainDeck, mainDeckSort, mainDeckStats, sideboard, sideboar
   );
 
   return (
-    <div className="row margin-top">
-      <div className="col s12 l9">
+    <div className="row">
+      <div className="col s12 l9 center">
         <h5><strong>Main Deck</strong></h5>
         <DeckStats stats={mainDeckStats} />
         <DeckControls
@@ -39,7 +39,7 @@ function DeckViewer({ mainDeck, mainDeckSort, mainDeckStats, sideboard, sideboar
         </div>
       </div>
 
-      <div className="col s12 l3">
+      <div className="col s12 l3 center">
         <h5><strong>Sideboard</strong></h5>
         <div>&nbsp;</div>
         <DeckControls

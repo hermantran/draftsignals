@@ -27,9 +27,7 @@ export function uploadData(data) {
 export function getData(id) {
   if (!cache[id]) {
     cache[id] = firebase.database().ref(`${dataRef}${id}`).once('value')
-      .then(snapshot => {
-        return Object.assign({}, snapshot.val(), { id });
-      });
+      .then(snapshot => Object.assign({}, snapshot.val(), { id }));
   }
 
   return cache[id];

@@ -20,7 +20,10 @@ export function logPageView() {
 export const actionLogger = store => next => action => {
 /*eslint-enable no-unused-vars*/
   if (IS_PROD) {
-    ReactGA.event({ category: 'User', action: action.type });
+    ReactGA.event({
+      category: 'User',
+      action: action.type || 'Default'
+    });
   }
 
   return next(action);

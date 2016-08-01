@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import './loader.scss';
 
-function Loader() {
+const propTypes = {
+  isTiny: PropTypes.bool
+};
+
+const defaultProps = {
+  isTiny: false
+};
+
+function Loader({ isTiny }) {
+  const wrapperClass = classNames({
+    'preloader-wrapper active spaced': true,
+    tiny: isTiny
+  });
+
   return (
-    <div className="preloader-wrapper tiny active spaced">
+    <div className={wrapperClass}>
       <div className="spinner-layer spinner-teal-only">
         <div className="circle-clipper left">
           <div className="circle"></div>
@@ -16,5 +30,8 @@ function Loader() {
     </div>
   );
 }
+
+Loader.propTypes = propTypes;
+Loader.defaultProps = defaultProps;
 
 export default Loader;

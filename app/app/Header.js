@@ -12,7 +12,7 @@ class Header extends Component {
             <li><Link className="black-text" to="/">Upload</Link></li>
           </ul>
           <ul className="right">
-            <li><Link className="black-text" to="/faq">FAQ</Link></li>
+            <li><Link className="black-text" to="/faqs">FAQs</Link></li>
           </ul>
         </div>
       </nav>

@@ -7,6 +7,7 @@ import DeckLayout from './DeckLayout';
 
 const mapStateToProps = (store, props) => {
   let state = store[constants.NAME],
+      { loading, success, title, commentsShown } = state,
       { id } = props.params,
       mainDeckStats = selectors.getMainDeckStats(state),
       mainDeck = selectors.getMainDeckSorted(state),
@@ -14,7 +15,8 @@ const mapStateToProps = (store, props) => {
       sideboard = selectors.getSideboardSorted(state),
       sideboardSort = selectors.getSideboardSort(state);
 
-  return { id, mainDeckStats, mainDeck, mainDeckSort, sideboard, sideboardSort };
+  return { id, loading, success, title, commentsShown, mainDeckStats, mainDeck,
+    mainDeckSort, sideboard, sideboardSort };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -4,6 +4,7 @@ import { SORTS } from './constants';
 const initialState = {
   draft: [],
   deck: [],
+  title: null,
   latest: [],
   mainDeckSort: SORTS.cmc,
   sideboardSort: SORTS.colors,
@@ -11,10 +12,12 @@ const initialState = {
   pick: null,
   packCount: 0,
   pickCount: 0,
+  selectedShownOnce: false,
   selectedShown: false,
   reservedShown: false,
   missingShown: false,
   previousShown: true,
+  commentsShown: false,
   success: true,
   loading: false
 };
@@ -26,23 +29,27 @@ function cardReducer(state = initialState, action) {
       return Object.assign({}, state, {
         draft: payload.draft,
         deck: payload.deck,
+        title: payload.title,
         pack: 1,
         pick: 1,
         packCount: payload.packCount,
         pickCount: payload.pickCount,
+        selectedShownOnce: false,
         success: true,
         loading: false
       });
     case types.ADD_LATEST_DRAFTS:
-      return Object.assign({}, state, {
-        latest: payload.latest
-      });
+      return Object.assign({}, state, payload);
     case types.VIEW_PREVIOUS:
       return getStateFromPackPick(state, state.pack, state.pick - 1);
     case types.VIEW_NEXT:
       return getStateFromPackPick(state, state.pack, state.pick + 1);
     case types.VIEW_PACK_PICK:
       return getStateFromPackPick(state, payload.pack, payload.pick);
+    case types.SHOW_SELECTED_ONCE:
+      return Object.assign({}, state, {
+        selectedShownOnce: true
+      });
     case types.TOGGLE_SELECTED:
       return Object.assign({}, state, {
         selectedShown: !state.selectedShown
@@ -59,6 +66,10 @@ function cardReducer(state = initialState, action) {
       return Object.assign({}, state, {
         previousShown: !state.previousShown
       });
+    case types.TOGGLE_COMMENTS:
+      return Object.assign({}, state, {
+        commentsShown: !state.commentsShown
+      });
     case types.CHANGE_MAIN_DECK_SORT:
       return Object.assign({}, state, {
         mainDeckSort: payload.sort
@@ -74,7 +85,13 @@ function cardReducer(state = initialState, action) {
       });
     case types.SHOW_LOADING:
       return Object.assign({}, state, {
-        loading: true
+        loading: true,
+        success: true
+      });
+    case types.RESET_ERROR:
+      return Object.assign({}, state, {
+        loading: false,
+        success: true
       });
   }
 
@@ -96,6 +113,7 @@ function getStateFromPackPick(state, pack, pick) {
   }
 
   return Object.assign({}, state, {
+    selectedShownOnce: false,
     pack,
     pick
   });

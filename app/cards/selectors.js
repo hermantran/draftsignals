@@ -5,6 +5,7 @@ const getDeck = (state) => state.deck;
 const getDraft = (state) => state.draft;
 const getPack = (state) => state.pack;
 const getPick = (state) => state.pick;
+const getSelectedShownOnce = (state) => state.selectedShownOnce;
 const getSelectedShown = (state) => state.selectedShown;
 const getMissingShown = (state) => state.missingShown;
 
@@ -19,11 +20,12 @@ export const getPicks = createSelector(
 );
 
 export const getMaskedPicks = createSelector(
-  [getPicks, getSelectedShown],
-  (picks, selectedShown) => {
-    return picks.map(card => Object.assign({}, card, { 
-      isSelected: selectedShown ? card.isSelected : false
-    }));
+  [getPicks, getSelectedShown, getSelectedShownOnce],
+  (picks, selectedShown, selectedShownOnce) => {
+    return picks.map(card =>
+      (!selectedShown && !selectedShownOnce && card.isSelected) ?
+      Object.assign({}, card, { isSelected: false }) : card
+    );
   }
 );
 
