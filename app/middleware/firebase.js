@@ -35,7 +35,7 @@ export function getData(id) {
 
 export function getLatest() {
   if (!cache.latest) {
-    cache.latest = firebase.database().ref(latestRef).limitToLast(5).once('value')
+    cache.latest = firebase.database().ref(latestRef).limitToLast(15).once('value')
       .then(snapshot => {
         let data = snapshot.val(),
             ids = Object.keys(data).reverse().map(key => data[key].id);

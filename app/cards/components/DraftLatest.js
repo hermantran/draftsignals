@@ -13,7 +13,14 @@ class DraftLatest extends Component {
     const getLink = (data) => (
       <div className="row" key={data.id}>
         <Link className="blue-text" to={`draft/${data.id}`}>{data.title}</Link>
+        {data.deck ? getDeckLink(data) : null}
       </div>
+    );
+
+    const getDeckLink = (data) => (
+      <span className="spaced">
+        (<Link className="blue-text" to={`deck/${data.id}`}>Deck</Link>)
+      </span>
     );
 
     return (

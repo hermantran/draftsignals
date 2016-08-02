@@ -3,7 +3,29 @@
 $width: 180px;
 $lWidth: $width * 0.85;
 $mWidth: $width * 0.75;
+$sWidth: $width * 0.53;
 $margin: 5px;
+
+@mixin card-dimensions($width) {
+  $ratio: 311 / 223;
+  width: $width;
+  height: round($width * $ratio);
+}
+
+@mixin card-sizer {
+  @include card-dimensions($width);
+  display: inline-block;
+  box-sizing: content-box;
+  border-radius: 9px;
+
+  @media screen and (max-width: $l-breakpoint) {
+    @include card-dimensions($lWidth);
+  }
+
+  @media #{$medium-and-down} {
+    @include card-dimensions($mWidth);
+  }
+}
 
 .card-wrapper {
   position: relative;
@@ -50,26 +72,20 @@ $margin: 5px;
   @media #{$medium-and-down} {
     max-width: $mWidth;
   }
-}
 
-@mixin card-dimensions($width) {
-  $ratio: 311 / 223;
-  width: $width;
-  height: round($width * $ratio);
-}
+  @media screen and (max-width: $s-breakpoint) {
+    &:not(.ignore-mobile) {
+      max-width: $sWidth;
+      font-size: 0.85rem;
 
-@mixin card-sizer {
-  @include card-dimensions($width);
-  display: inline-block;
-  box-sizing: content-box;
-  border-radius: 9px;
+      .card-image {
+        @include card-dimensions($sWidth);
+      }
 
-  @media screen and (max-width: $l-breakpoint) {
-    @include card-dimensions($lWidth);
-  }
-
-  @media #{$medium-and-down} {
-    @include card-dimensions($mWidth);
+      .card-placeholder {
+        @include card-dimensions($sWidth);
+      }
+    }
   }
 }
 

@@ -18,10 +18,9 @@ class DraftControls extends Component {
   render() {
     const { onPrev, packCount, pickCount, showSelectedOnce, onNext,
       selectedShown, toggleSelected, missingShown, toggleMissing,
-      previousShown, togglePrevious } = this.props;
+      previousShown, togglePrevious, pack, pick } = this.props;
 
     const getTitle = () => {
-      let { pack, pick } = this.props;
       return pick ? <strong>Pack {pack} Pick {pick}</strong> : null;
     };
 
@@ -39,7 +38,7 @@ class DraftControls extends Component {
     };
 
     return (
-      <div className="center">
+      <div className="draft-controls center">
         <h5>{getTitle()}</h5>
         <div>
           <button className="btn" onClick={onPrev}>&#10094;</button>
@@ -47,6 +46,7 @@ class DraftControls extends Component {
           <div className="pack-pick-menu-wrapper">
             <button className="btn pack-pick-button">Jump To</button>
             <select className="browser-default pack-pick-menu"
+             value={`${pack}|${pick}`}
              onChange={this.handleSelectChange}>
               {getSelectOptions(packCount, pickCount)}
             </select>

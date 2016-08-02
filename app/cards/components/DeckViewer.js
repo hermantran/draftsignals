@@ -20,7 +20,7 @@ function DeckViewer({ mainDeck, mainDeckSort, mainDeckStats, sideboard, sideboar
 
   const createCard = (card, index) => (
     <div key={card.id} className="deck-card" style={getCardStyle(index)}>
-      <Card card={card} hideName="true" />
+      <Card card={card} hideName="true" ignoreMobile="true" />
     </div>
   );
 

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './card.scss';
 
-function Card({ card, hideName, hideEnlarged }) {
+function Card({ card, hideName, hideEnlarged, ignoreMobile }) {
   const GATHERER_URL = 'http://gatherer.wizards.com/',
       IMAGE_URL = `${GATHERER_URL}Handlers/Image.ashx?type=card`,
       CARD_URL = `${GATHERER_URL}Pages/Card/Details.aspx?`;
@@ -40,6 +40,7 @@ function Card({ card, hideName, hideEnlarged }) {
 
   const wrapperClass = classNames({
     'card-wrapper': true,
+    'ignore-mobile': ignoreMobile,
     selected: card.isSelected,
     missing: card.isMissing
   });

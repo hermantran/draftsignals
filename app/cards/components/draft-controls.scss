@@ -1,3 +1,14 @@
+@import '../../common/variables.scss';
+
+.draft-controls {
+  @media screen and (max-width: $s-breakpoint) {
+    .btn {
+      padding: 0 1.42em;
+      font-size: 0.8rem;
+    }
+  }
+}
+
 .pack-pick-menu-wrapper {
   position: relative;
   width: 127px;
@@ -7,6 +18,11 @@
   overflow-y: hidden;
   cursor: pointer;
   margin: 0 5px;
+
+  @media screen and (max-width: $s-breakpoint) {
+    width: 90px;
+    margin: 0 3px;
+  }
 }
 
 .pack-pick-button {
@@ -25,4 +41,8 @@ select.pack-pick-menu {
   height: 100%;
   width: 90%;
   cursor: pointer;
+
+  @media screen and (max-width: $s-breakpoint) {
+    width: 80%;
+  }
 }

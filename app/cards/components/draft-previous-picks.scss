@@ -20,6 +20,10 @@
     padding: 0 20px;
     height: auto;
   }
+
+  @media screen and (max-width: $s-breakpoint) {
+    padding: 0 10px;
+  }
 }
 
 .previous-pick {
