@@ -4,6 +4,7 @@ $width: 180px;
 $lWidth: $width * 0.85;
 $mWidth: $width * 0.75;
 $sWidth: $width * 0.53;
+$tWidth: $width * 0.46;
 $margin: 5px;
 
 @mixin card-dimensions($width) {
@@ -84,6 +85,21 @@ $margin: 5px;
 
       .card-placeholder {
         @include card-dimensions($sWidth);
+      }
+    }
+  }
+
+  @media screen and (max-width: $t-breakpoint) {
+    &:not(.ignore-mobile) {
+      max-width: $tWidth;
+      font-size: 0.8rem;
+
+      .card-image {
+        @include card-dimensions($tWidth);
+      }
+
+      .card-placeholder {
+        @include card-dimensions($tWidth);
       }
     }
   }

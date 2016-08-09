@@ -11,6 +11,10 @@
   @media screen and (max-width: $l-breakpoint) {
     height: 500px;
   }
+
+  @media screen and (max-width: $s-breakpoint) {
+    height: 400px;
+  }
 }
 
 .deck-column {

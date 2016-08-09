@@ -1,0 +1,13 @@
+@import '../../common/variables.scss';
+
+$sFontSize: 0.95rem;
+
+.deck-controls {
+  @media screen and (max-width: $s-breakpoint) {
+    font-size: $sFontSize;
+
+    .radio-button-wrapper input[type="radio"] + label {
+      font-size: $sFontSize;
+    }
+  }
+}

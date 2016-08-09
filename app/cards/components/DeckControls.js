@@ -1,6 +1,7 @@
 import React from 'react';
 import { RadioButton } from '../../common';
 import { SORTS } from '../constants';
+import './deck-controls.scss';
 
 function DeckControls({ name, activeSort, changeSort }) {
   const isSort = (sort) => sort === activeSort;
@@ -16,7 +17,7 @@ function DeckControls({ name, activeSort, changeSort }) {
   );
 
   return (
-    <div>
+    <div className="deck-controls">
       Sort By:
       {createSort(SORTS.cmc, 'CMC')}
       {createSort(SORTS.colors, 'Color')}
