@@ -25,7 +25,11 @@ function readAndWrite(filename) {
     }
     
     var output = getOutput(data);
-    fs.writeFile(FORMATTED_DATA_DIR + filename, JSON.stringify(output));
+    fs.writeFile(FORMATTED_DATA_DIR + filename, JSON.stringify(output), (err, data) => {
+      if (err) {
+        return console.log(err);
+      }
+    });
   }
 }
 
@@ -54,7 +58,7 @@ function getFormatted(card) {
       altName = card.names ? card.names[1] : undefined;
 
   return {
-    cmc: card.cmc || 0,
+    cmc: parseInt(card.convertedManaCost, 10) || 0,
     colors: (type === TYPES.LAND) ? 'C' : colors.join(''),
     rarity: rarity,
     type: type,
