@@ -8,9 +8,10 @@ const regex = {
   draft: /Event\s#:\s\d*/,
   deck: /^[0-9]{1,2}\s/,
   deckReplace: /([0-9]{1,2}\s)|\r|\n/g,
-  set: /-{6}\s[A-Z|\d]{3}\s-{6}\s/,
-  setReplace: /(-|\s)/g,
+  set: /-{6}\s([A-Z|\d]{3}|Pack \d: [A-z|\d\s]*)\s-{6}\s/,
+  setReplace: /(-|\s|Pack \d:)/g,
   pick: /Pack\s\d\spick\s\d/,
+  packReplace: /(Pack\s|\spick\s\d*)|:/g,
   pickReplace: /(Pack\s\d\spick\s)|:/g,
   card: /\s{4}|-->\s/,
   selected: /-->\s/,
@@ -220,10 +221,11 @@ function parseDraftData(data) {
     if (regex.set.test(line)) {
       set = line.replace(regex.setReplace, '');
       sets.push(set);
-      pack++;
     }
     else if (regex.pick.test(line)) {
-      pick = parseInt(line.replace(regex.pickReplace, ''), 10);
+      pack = parseInt(line.replace(regex.packReplace, ''), 10);
+      const tempPick = parseInt(line.replace(regex.pickReplace, ''), 10);
+      pick = (tempPick === 1) ? tempPick : pick + 1;
       isInPicks = true;      
     }
     else if (regex.reserved.test(line)) {
